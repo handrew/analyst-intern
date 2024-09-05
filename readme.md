@@ -1,10 +1,9 @@
 # tts-cli
 
-Install ffmpeg with homebrew.
-
-`pip install requirements.txt`
-
-Then: 
+1. Install ffmpeg with homebrew.
+2. `pip install requirements.txt` in your favorite virtual env.
+3. Set your `OPENAI_API_KEY` in your `.bashrc` or `.vimrc` or `.zshrc`.
+4. Then: 
 ```
 python read.py --help
 
@@ -19,4 +18,4 @@ Options:
   --model TEXT  Which model.
   --help        Show this message and exit.
 ```
-
+5. Listen to it at the specified `fpath`.
