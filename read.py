@@ -7,6 +7,29 @@ from langchain_text_splitters import TokenTextSplitter
 from tqdm import tqdm
 
 
+
+def openai_tts(text, voice="nova", model="tts-1"):
+    """Uses openai to generate speech."""
+    client = OpenAI()
+    response = client.audio.speech.create(model=model, voice=voice, input=text)
+    return response
+
+
+def split_text(text, chunk_size=500, chunk_overlap=0):
+    """Split text using TokenTextSplitter."""
+    text_splitter = TokenTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+    texts = text_splitter.split_text(text)
+    return texts
+
+
+def stitch_mp3s_together(fpaths, outpath):
+    """Stitch mp3s together."""
+    cmd = f"""ffmpeg -i 'concat:{
+        '|'.join(fpaths)
+    }' -c copy {outpath}"""
+    os.system(cmd)
+
+
 @click.command()
 @click.option("--fpath", default="speech.mp3", help="Output file.")
 @click.option("--text", default=None, help="txt file or string.")
@@ -22,25 +45,18 @@ def cli(fpath, text, voice, model):
         with open(text, "r", encoding="utf-8") as f:
             text = f.read()
 
-    # Split text.
-    text_splitter = TokenTextSplitter(chunk_size=500, chunk_overlap=0)
-    texts = text_splitter.split_text(text)
+    texts = split_text(text)
 
-    # Text to speech.
     with tempfile.TemporaryDirectory() as tmpdir:
         for i, _text in tqdm(enumerate(texts)):
-            client = OpenAI()
-            response = client.audio.speech.create(model=model, voice=voice, input=_text)
             outpath = fpath.replace(".mp3", f"_{i}.mp3")
             outpath = os.path.join(tmpdir, outpath)
+            response = openai_tts(_text, voice=voice, model=model).
             response.stream_to_file(outpath)
             print(_text)
 
-        # ffmpeg it together.
-        cmd = f"""ffmpeg -i 'concat:{
-            '|'.join([os.path.join(tmpdir, fpath.replace('.mp3', f'_{i}.mp3')) for i in range(len(texts))])
-        }' -c copy {fpath}"""
-        os.system(cmd)
+        fpaths = [os.path.join(tmpdir, fpath.replace(".mp3", f"_{i}.mp3")) for i in range(len(texts))]
+        stitch_mp3s_together(fpaths, fpath)
 
 
 if __name__ == "__main__":
