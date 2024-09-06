@@ -51,7 +51,7 @@ def cli(fpath, text, voice, model):
         for i, _text in tqdm(enumerate(texts)):
             outpath = fpath.replace(".mp3", f"_{i}.mp3")
             outpath = os.path.join(tmpdir, outpath)
-            response = openai_tts(_text, voice=voice, model=model).
+            response = openai_tts(_text, voice=voice, model=model)
             response.stream_to_file(outpath)
             print(_text)
 
