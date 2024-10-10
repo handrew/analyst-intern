@@ -1,21 +1,57 @@
-# tts-cli
+# Intern CLI
 
-1. Install ffmpeg with homebrew.
-2. `pip install requirements.txt` in your favorite virtual env.
-3. Set your `OPENAI_API_KEY` in your `.bashrc` or `.vimrc` or `.zshrc`.
-4. Then: 
+## Installation
+
+1. `pip install analyst-intern`
+2. Install ffmpeg with homebrew.
+3. Set your `OPENAI_API_KEY` in your `.bashrc` or `.vimrc` or `.zshrc`. Can also support Gemini and Anthropic.
+
+## Usage
+
+Run `intern --help`:
+
 ```
-python read.py --help
+Usage: intern [OPTIONS] COMMAND [ARGS]...
 
-Usage: read.py [OPTIONS]
-
-  Read text.
+  Intern CLI.
 
 Options:
-  --fpath TEXT  Output file.
-  --text TEXT   txt file or string.
-  --voice TEXT  Voice to use.
-  --model TEXT  Which model.
-  --help        Show this message and exit.
+  --help  Show this message and exit.
+
+Commands:
+  read      Given a file, read it out and save the speech to an mp3 file.
+  research  Visit provided links, apply the prompt, summarize the results.
 ```
-5. Listen to it at the specified `fpath`.
+
+### `intern read`
+
+Given a txt file, md file, or string, use OpenAI's TTS to save an mp3 file. 
+
+```
+Usage: intern read [OPTIONS]
+
+  Given a file, read it out and save the speech to an mp3 file.
+
+Options:
+  --output TEXT  Output file.  [required]
+  --text TEXT    txt or md file or string.  [required]
+  --voice TEXT   Voice to use.  [required]
+  --model TEXT   Which model.  [required]
+  --help         Show this message and exit.
+```
+
+### `intern research`
+
+```
+Usage: intern research [OPTIONS] PROMPT
+
+  Visit provided urls, apply the prompt, summarize the results.
+
+Options:
+  --url TEXT                      List of urls to visit.  [required]
+  --headless                      Whether or not to run the browser headless.
+  --model [openai|anthropic|gemini]
+                                  Which model to use.
+  --output TEXT                   Output file to save the results to.
+  --help                          Show this message and exit.
+```
