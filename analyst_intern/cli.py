@@ -5,8 +5,8 @@ import click
 from tqdm import tqdm
 from rich import print
 from playwright.sync_api import sync_playwright
-from utils import llm_call
-from utils import openai_tts, split_text, stitch_mp3s_together
+from analyst_intern.utils import llm_call
+from analyst_intern.utils import openai_tts, split_text, stitch_mp3s_together
 
 
 @click.group()
