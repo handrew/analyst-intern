@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "analyst-intern"
-version = "0.0.1"
+version = "0.0.2"
 description = "An analyst intern in your terminal"
 authors = ["Andrew Han <handrew11@gmail.com>"]
 readme = "README.md"
@@ -12,7 +12,7 @@ langchain-text-splitters = "*"
 tqdm = "*"
 
 [tool.poetry.scripts]
-intern = "intern.cli:cli"
+intern = "analyst_intern.cli:cli"
 
 [build-system]
 requires = ["poetry-core"]
