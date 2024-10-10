@@ -48,14 +48,16 @@ def cli(fpath, text, voice, model):
     texts = split_text(text)
 
     with tempfile.TemporaryDirectory() as tmpdir:
+        print("Using temporary directory: ", tmpdir)
         for i, _text in tqdm(enumerate(texts)):
-            outpath = fpath.replace(".mp3", f"_{i}.mp3")
+            outpath = f"{i}.mp3"
             outpath = os.path.join(tmpdir, outpath)
             response = openai_tts(_text, voice=voice, model=model)
             response.stream_to_file(outpath)
             print(_text)
+            print("Output to: ", outpath)
 
-        fpaths = [os.path.join(tmpdir, fpath.replace(".mp3", f"_{i}.mp3")) for i in range(len(texts))]
+        fpaths = [os.path.join(tmpdir, f"{i}.mp3") for i in range(len(texts))]
         stitch_mp3s_together(fpaths, fpath)
 
 
