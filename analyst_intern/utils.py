@@ -3,19 +3,7 @@
 import os
 from openai import OpenAI
 from langchain_text_splitters import TokenTextSplitter
-from wordcel.llms import openai_call, anthropic_call, gemini_call
-
-
-def llm_call(prompt, model="openai"):
-    """LLM call router."""
-    if model == "openai":
-        return openai_call(prompt)
-    elif model == "anthropic":
-        return anthropic_call(prompt)
-    elif model == "gemini":
-        return gemini_call(prompt)
-    else:
-        raise ValueError(f"Unsupported LLM provider: {model}")
+from wordcel.llms import llm_call
 
 
 """TTS utils."""
