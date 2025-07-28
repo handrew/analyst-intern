@@ -22,8 +22,7 @@ def cli():
 )
 @click.option(
     "--model",
-    type=click.Choice(["openai", "anthropic", "gemini"]),
-    default="openai",
+    default="gemini/gemini-2.5-flash",
     help="Which model to use.",
 )
 @click.option(

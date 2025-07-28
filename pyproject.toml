@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "analyst-intern"
-version = "0.0.4"
+version = "0.0.5"
 description = "An analyst intern in your terminal"
 authors = ["Andrew Han <handrew11@gmail.com>"]
 readme = "README.md"
